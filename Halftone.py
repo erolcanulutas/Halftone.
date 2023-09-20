@@ -60,8 +60,7 @@ class HalftoneApp:
         self.halftone_label.image = placeholder_tk
         self.halftone_label.place(x=240, y=110)
 
-    
-    
+        
         # Enable/Disable resolution slider based on vectoral checkbox
         if self.vectoral.get():
             self.resolution_slider.pack_forget()
