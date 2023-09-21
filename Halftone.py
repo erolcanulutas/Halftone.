@@ -34,7 +34,7 @@ class HalftoneApp:
         # Vectoral checkbox
         
         # Dot density slider (initially hidden)
-        self.dot_density_slider = Scale(self.root, from_=5, to=50, orient=tk.HORIZONTAL, label="Dot Density")
+        self.dot_density_slider = Scale(self.root, from_=5, to=300, orient=tk.HORIZONTAL, label="Dot Density")
         self.dot_density_slider.set(10)  # default value
         self.dot_density_slider.place(x=170, y=100)
         self.dot_density_slider.place_forget()  # Hide initially
@@ -70,6 +70,16 @@ class HalftoneApp:
             self.resolution_slider.pack(pady=10)
 
         # Enable/Disable resolution slider based on vectoral checkbox
+        
+            # Dot density adjustment
+            dot_density = self.dot_density_slider.get()
+            # ... apply dot_density to SVG generation logic
+            # (This part needs to be filled in based on how dot_density should affect the SVG output.)
+            
+        
+            # Get the dot density
+            dot_density = self.dot_density_slider.get()
+            # ... apply dot_density to SVG generation logic here (e.g., adjusting the number of horizontal pixels or dot placeholders)
         if self.vectoral.get():
             self.resolution_slider.config(state=tk.DISABLED)
         else:
@@ -117,7 +127,7 @@ class HalftoneApp:
             output_image = Image.new("L", self.image.size, 255)
             draw = ImageDraw.Draw(output_image)
 
-            step_size = 10
+            step_size = 255-self.dot_density_slider.get()
             for x in range(0, self.image.width, step_size):
                 for y in range(0, self.image.height, step_size):
                     # Get average color in this square
@@ -148,7 +158,7 @@ class HalftoneApp:
                     
                     dwg = svgwrite.Drawing(file_path, profile='tiny', size=(self.halftoned_image.width, self.halftoned_image.height))
 
-                    step_size = 10
+                    step_size = 255-self.dot_density_slider.get()
                     for x in range(0, self.halftoned_image.width, step_size):
                         for y in range(0, self.halftoned_image.height, step_size):
                             average = self.average_color(x, y, step_size)
